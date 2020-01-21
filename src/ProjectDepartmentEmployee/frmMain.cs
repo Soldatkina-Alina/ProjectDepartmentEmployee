@@ -20,7 +20,6 @@ namespace ProjectDepartmentEmployee
             InitializeComponent();
             TreeViewColor_Load();
             getOtdel();
-            //getTable();
         }
 
         #region Заполнение данными
@@ -51,8 +50,6 @@ namespace ProjectDepartmentEmployee
                 }
                     ).ToList();
             }
-
-                //dgvEmployee.DataSource = emp.listEmp;
         }
 
         private void getEmployeeInformation()
@@ -178,11 +175,6 @@ namespace ProjectDepartmentEmployee
             getTable();
         }
 
-        private void dgvEmployee_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             frmAddEditEmployee frmAddEditEmployee = new frmAddEditEmployee();
@@ -211,7 +203,6 @@ namespace ProjectDepartmentEmployee
             {
                 dgvEmployee.DataSource = db.Employees.Where(x=> x.DepartmentID.ToString() == cmbOtdel.SelectedValue.ToString());
             }
-
         }
 
         private void cmbOtdel_SelectedIndexChanged(object sender, EventArgs e)
@@ -223,7 +214,6 @@ namespace ProjectDepartmentEmployee
                 emp.DepartmentID = Guid.Parse(cmbOtdel.SelectedValue.ToString());
             getTable();
         }
-
 
         private void tbSearchEmployee_TextChanged_1(object sender, EventArgs e)
         {

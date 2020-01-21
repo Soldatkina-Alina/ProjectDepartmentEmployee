@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.Common;
 using System.Windows.Forms;
 using ProjectDepartmentEmployee.Interface;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 
 namespace ProjectDepartmentEmployee.Class
 {
     class Employee : IEmployee
     {
-        [Key]
+        //[Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public decimal ID { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid? DepartmentID { get; set; }
+        
         public string SurName { get; set; }
         public string FirstName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -24,29 +28,12 @@ namespace ProjectDepartmentEmployee.Class
         public string DocNumber { get; set; }
         public string Position { get; set; }
 
-        [ForeignKey("DepartmentID")]
-        public virtual Department Department { get; set; }
-
-        //public List<Employee> listEmp {
-        //    get 
-        //    {
-        //        using (DataBase db = new DataBase())
-        //        {
-        //            //if (this.DepartmentID == null)
-        //            //    return listEmp = db.Empoyees.Where(x=> x==x).ToList();
-        //            //else
-        //            return db.Empoyees.Where(x => x.DepartmentID == this.DepartmentID ).Select(r=>  new
-        //                { ID = r.ID,
-        //                DepartmentID= r.DepartmentID,
-        //                SurName = r.SurName,
-        //                FirstName = r.FirstName,
-        //                Patronymic = r.Patronymic
-        //            }
-        //            ).ToList();
-        //        }
-        //    }
-        //    set { } }
         
+        public Guid? DepartmentID { get; set; }
+        [ForeignKey("DepartmentID")]
+
+        public Department Department { get; set; }
+
         public bool isEdit;
         public string filter = "";
         public int EmployeeAge
@@ -78,19 +65,10 @@ namespace ProjectDepartmentEmployee.Class
             this.Position = Position;
         }
 
-        //public Employee (int ID)
-        //{
-        //    // заполнить все поля из БД
-        //    isEdit = true;
-        //}
-
-        
-
         public void addEmployee(Employee em)
         {
             using (DataBase db = new DataBase())
             {
-                //em.Department = em.DepartmentID;
                 db.Employees.Add(em);
                 db.SaveChanges();
             }

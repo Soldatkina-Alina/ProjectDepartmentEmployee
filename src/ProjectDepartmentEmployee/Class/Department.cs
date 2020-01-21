@@ -2,13 +2,15 @@
 using System.Data;
 using ProjectDepartmentEmployee.Interface;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace ProjectDepartmentEmployee.Class
 {
     public class Department : IDepartment
     {
-        [Key]
-        public Guid ID { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid? ID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public Guid? ParentDepartmentID { get; set; }

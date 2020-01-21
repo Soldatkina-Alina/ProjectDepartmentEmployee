@@ -15,6 +15,7 @@ namespace ProjectDepartmentEmployee
         Employee emp;
         Employee empOld;
         Department dep = new Department();
+        bool isChange = false;
 
         public frmAddEditEmployee()
         {
@@ -50,6 +51,8 @@ namespace ProjectDepartmentEmployee
             DataTable dt = dep.Otdel;
             dt.Rows.RemoveAt(0);
             cmbOtdel.DataSource = dt;
+            isChange = true;
+            cmbOtdel.SelectedValue = emp.DepartmentID;
         }
 
         private void setData()
@@ -61,14 +64,14 @@ namespace ProjectDepartmentEmployee
             tbDocSeries.Text = emp.DocSeries;
             dtpDateOfBirth.Value = emp.DateOfBirth;
             tbPosition.Text = emp.Position;
-            cmbOtdel.SelectedValue = emp.DepartmentID;
+           // cmbOtdel.SelectedValue = emp.DepartmentID;
         }
 
         private bool checkData()
         {
             if (dtpDateOfBirth.Value.Year > DateTime.Now.Year - 14)
             {
-                MessageBox.Show("Неккоректное значение даты.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Config.centralText("Неккоректное значение даты.\nВозраст сотрудника меньше 14 лет.\n"), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;
             }
 
@@ -97,9 +100,13 @@ namespace ProjectDepartmentEmployee
             foreach (var e1 in emp.GetType().GetProperties())
                 foreach (var e2 in empOld.GetType().GetProperties())
                     if (e1.Name == e2.Name && e1.Name != "Department")
+                    {
+                        if (e1.Name == "Patronymic" && emp.Patronymic == "" && empOld.Patronymic == null)
+                            continue;
                         //MessageBox.Show(e1.Name + " " + e1.GetValue(emp, null).ToString() + " " + e2.Name + " " + e2.GetValue(empOld, null).ToString());
-                        if (e1.GetValue(emp, null).ToString() != e2.GetValue(empOld, null).ToString())
+                        else if (e1.GetValue(emp, null).ToString() != e2.GetValue(empOld, null).ToString())
                             return true;
+                    }
 
             return false;
         }
@@ -107,7 +114,7 @@ namespace ProjectDepartmentEmployee
         private bool checkEmptyTextBox()
         {
             foreach (TextBox tb in this.Controls.OfType<TextBox>())
-                if (tb.Name != "" && tb.Text.Length < 1)
+                if (tb.Name != "tbPatronymic" && tb.Text.Length < 1)
                     return false;
 
             return true;
@@ -162,13 +169,21 @@ namespace ProjectDepartmentEmployee
             emp.Position = tbPosition.Text;
             emp.DepartmentID = Guid.Parse(cmbOtdel.SelectedValue.ToString());
             if (emp.isEdit)
-                btnSave.Enabled = compareEmployee() && emp.DocSeries.Length == 4 && emp.DocNumber.Length == 6;
+                btnSave.Enabled = compareEmployee() && checkEmptyTextBox() 
+                    && emp.DocSeries.Length == 4 && emp.DocNumber.Length == 6;
             else btnSave.Enabled = checkEmptyTextBox() && emp.DocSeries.Length == 4 && emp.DocNumber.Length == 6;
         }
 
         private void dtpDateOfBirth_ValueChanged(object sender, EventArgs e)
         {
+            tb_TextChanged(sender, e);
+        }
 
+
+        private void cmbOtdel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isChange)
+                tb_TextChanged(sender, e);
         }
     }
 }

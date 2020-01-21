@@ -126,6 +126,7 @@
             // 
             this.tbPosition.Location = new System.Drawing.Point(180, 316);
             this.tbPosition.Margin = new System.Windows.Forms.Padding(4);
+            this.tbPosition.MaxLength = 50;
             this.tbPosition.Name = "tbPosition";
             this.tbPosition.Size = new System.Drawing.Size(321, 22);
             this.tbPosition.TabIndex = 11;
@@ -136,6 +137,7 @@
             // 
             this.tbSurName.Location = new System.Drawing.Point(180, 69);
             this.tbSurName.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSurName.MaxLength = 50;
             this.tbSurName.Name = "tbSurName";
             this.tbSurName.Size = new System.Drawing.Size(321, 22);
             this.tbSurName.TabIndex = 14;
@@ -161,6 +163,7 @@
             this.cmbOtdel.Name = "cmbOtdel";
             this.cmbOtdel.Size = new System.Drawing.Size(321, 24);
             this.cmbOtdel.TabIndex = 16;
+            this.cmbOtdel.SelectedIndexChanged += new System.EventHandler(this.cmbOtdel_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -186,6 +189,7 @@
             // 
             this.tbFirstName.Location = new System.Drawing.Point(180, 107);
             this.tbFirstName.Margin = new System.Windows.Forms.Padding(4);
+            this.tbFirstName.MaxLength = 50;
             this.tbFirstName.Name = "tbFirstName";
             this.tbFirstName.Size = new System.Drawing.Size(321, 22);
             this.tbFirstName.TabIndex = 19;
@@ -196,6 +200,7 @@
             // 
             this.tbPatronymic.Location = new System.Drawing.Point(180, 148);
             this.tbPatronymic.Margin = new System.Windows.Forms.Padding(4);
+            this.tbPatronymic.MaxLength = 50;
             this.tbPatronymic.Name = "tbPatronymic";
             this.tbPatronymic.Size = new System.Drawing.Size(321, 22);
             this.tbPatronymic.TabIndex = 20;

@@ -8,7 +8,7 @@ namespace ProjectDepartmentEmployee.Interface
 {
     interface IDepartment
     {
-        Guid ID { get; set; }
+        Guid? ID { get; set; }
         Guid? ParentDepartmentID { get; set; }
         string Code { get; set; }
         string Name { get; set; }

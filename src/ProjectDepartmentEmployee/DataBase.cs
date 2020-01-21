@@ -2,6 +2,9 @@
 using ProjectDepartmentEmployee.Class;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 
 namespace ProjectDepartmentEmployee
 {
@@ -19,6 +22,8 @@ namespace ProjectDepartmentEmployee
             modelBuilder.Entity<Employee>().ToTable("Empoyee");
             base.OnModelCreating(modelBuilder);
         }
+
+
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
